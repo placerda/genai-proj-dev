@@ -23,7 +23,7 @@ class AzureConfig:
             - AZURE_RESOURCE_GROUP: The resource group name containing the Azure services.
             - AZUREAI_PROJECT_NAME: The name of the Azure Machine Learning project.
 
-        - Other Configuration Parameters:
+        - Other Variables Parameters:
             - AZURE_LOCATION: (Optional) The location of the resources.
             - AZURE_OPENAI_ENDPOINT: (Optional) The endpoint for Azure OpenAI.
             - AZURE_OPENAI_API_VERSION: (Optional) API version for Azure OpenAI.
