@@ -1,3 +1,4 @@
+import logging
 import os
 import re
 from dotenv import load_dotenv
@@ -6,17 +7,28 @@ load_dotenv()
 
 class AzureConfig:
     def __init__(self):
-        # Load environment variables for Azure configuration
-        self.subscription_id = os.environ["AZURE_SUBSCRIPTION_ID"]
-        self.resource_group = os.environ["AZURE_RESOURCE_GROUP"]
-        self.workspace_name = os.environ["AZUREAI_PROJECT_NAME"]
-        self.location = os.getenv("AZURE_LOCATION", "")
-        self.aoai_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT", "")
-        self.aoai_api_version = os.getenv("AZURE_OPENAI_API_VERSION", "")
-        self.search_endpoint = os.getenv("AZURE_SEARCH_ENDPOINT", "")
+        # Load essential environment variables with logging if not set
+        self.subscription_id = self.get_env_var("AZURE_SUBSCRIPTION_ID")
+        self.resource_group = self.get_env_var("AZURE_RESOURCE_GROUP")
+        self.workspace_name = self.get_env_var("AZUREAI_PROJECT_NAME")
+
+        # Load optional environment variables with default values
+        self.location = os.getenv("AZURE_LOCATION")
+        self.aoai_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
+        self.aoai_api_version = os.getenv("AZURE_OPENAI_API_VERSION")
+        self.search_endpoint = os.getenv("AZURE_SEARCH_ENDPOINT")
+
+        # Other configuration settings
         self.aoai_api_key = "use_managed_identity"
         self.aoai_account_name = self.get_domain_prefix(self.aoai_endpoint)
         self.search_account_name = self.get_domain_prefix(self.search_endpoint)
+
+    def get_env_var(self, var_name):
+        """Retrieve environment variable and log if it's not set."""
+        value = os.getenv(var_name)
+        if value is None:
+            logging.info(f"Environment variable '{var_name}' is not set.")
+        return value
 
         if not self.aoai_endpoint:
             # Try to get the connection information from AI Project

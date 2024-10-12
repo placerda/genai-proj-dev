@@ -10,13 +10,7 @@ jobs:
   unit-testing:
     if: ${{ github.repository != 'Azure/GenAIOps-project-template' }}    
     runs-on: ubuntu-latest
-    environment: dev
-    env:
-      AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}   
-      AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
-      AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
-      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
-      AZURE_RESOURCE_GROUP: rg-${{ vars.AZURE_ENV_NAME }}             
+    environment: dev         
     steps:       
       - uses: actions/checkout@v4
       - name: Setup Python 
