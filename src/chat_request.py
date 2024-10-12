@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 load_dotenv()
 
+import logging
 import os
 import pathlib
 from ai_search import retrieve_documentation
@@ -12,7 +13,7 @@ from azure_config import AzureConfig
 
 # Initialize AzureConfig
 azure_config = AzureConfig()
-
+ 
 def get_embedding(question: str):
     embedding_model = os.environ["AZURE_OPENAI_EMBEDDING_MODEL"]
 
@@ -44,7 +45,7 @@ def get_response(question, chat_history):
     print("context:", context)
     print("getting result...")
 
-    deployment_name = os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT"]
+    deployment_name = os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT")
 
     configuration = AzureOpenAIModelConfiguration(
         azure_deployment=deployment_name,
